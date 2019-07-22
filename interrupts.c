@@ -18,7 +18,8 @@
 #endif
 
 bool state = 0;
-double count = 0;
+long count = 0;
+int precarga = 0;
 /******************************************************************************/
 /* Interrupt Routines                                                         */
 /******************************************************************************/
@@ -29,6 +30,7 @@ void interrupt high_isr(void) {
     if (INTCONbits.INT0IF) {
         /* Zero-crossing input detection */
         LATBbits.LATB2 = 0; // Turn-off output
+        TMR0=precarga;
         T0CONbits.TMR0ON = 1; // Enable timer0
 
         INTCONbits.INT0IF = 0; // Restart INT0
@@ -39,21 +41,3 @@ void interrupt high_isr(void) {
         INTCONbits.TMR0IF = 0; // Restart TMR0 interrupt
     }
 }
-
-/* Low-priority interrupt routine */
-
-void low_priority interrupt low_isr(void) {
-    if (INTCON3bits.INT1IF) {
-        /* Software polling for phase selection */
-        count++;
-        
-        
-        state = ~state;
-        if(state) {
-            
-        }
-        
-        INTCON3bits.INT1IF = 0; // Restart INT1
-    }
-}
-
