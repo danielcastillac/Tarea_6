@@ -24,16 +24,16 @@
 /******************************************************************************/
 /* User Global Variable Declaration                                           */
 /******************************************************************************/
-unsigned int t_firing = 1; // Time when 
+unsigned int t_firing = 255; // Time when 
 unsigned int per = 255; // Half-wave period
-unsigned int per_count = ; // Delay time between each count (us)
+// unsigned int per_count = ; // Delay time between each count (us)
 unsigned int count_up = 0;
 bool inc_t;
 bool dec_t;
 unsigned int count_t = 0; 
 
 // bool state = 0; // Increasing or decreasing state
-extern int precarga;
+extern unsigned int precarga;
 
 /******************************************************************************/
 /* Main Program                                                               */
@@ -49,13 +49,13 @@ void main(void) {
 
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
-    unsigned int count_press_delay = 30000; // After duration, start decreasing
-    unsigned int max_count = 3; // Para que se incremente cada n períodos
+    unsigned int count_press_delay = 15000; // After duration, start decreasing
+    unsigned int max_count = 200; // Para que se incremente cada n períodos
 
 
     while (1) {
         /* Polling routine */
-        __delay_us(50); // Wait before next count
+        __delay_us(100); // Wait before next count
 
         if (PORTBbits.RB1) {
             count_up += 1;

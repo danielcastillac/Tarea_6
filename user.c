@@ -36,6 +36,7 @@ void InitApp(void) {
     TRISBbits.RB1 = 1; // Push-button input
     TRISBbits.RB2 = 0; // Opto-triac control pin
     LATBbits.LATB2 = 0; // Initialize in zero
+    PORTBbits.RB0 = 0; // By default, RB0=0 in
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */
     RCONbits.IPEN = 0; // Enable interrupt priorities
     /* Enable interrupts */
@@ -43,7 +44,7 @@ void InitApp(void) {
     INTCONbits.PEIE = 1; // Enable peripheral interrupts
     INTCONbits.INT0IE = 1; // Enable INT0
     INTCONbits.INT0IF = 0; // Clear INT0 flag
-    INTCON2bits.INTEDG0 = 1; // INT0 on rising edge
+    INTCON2bits.INTEDG0 = 0; // INT0 on falling edge
     //INTCON3bits.INT1IE = 1; // Enable INT1
     //INTCON3bits.INT1IF = 0; // Clear INT1 flag
     //INTCON2bits.INTEDG1 = 1; // INT1 on rising edge
