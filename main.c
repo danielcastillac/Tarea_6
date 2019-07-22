@@ -43,7 +43,8 @@ void main(void) {
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
     while (1) {
-
+        /* Polling routine */
+        
     }
 
 }
