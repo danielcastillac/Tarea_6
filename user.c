@@ -45,9 +45,6 @@ void InitApp(void) {
     INTCONbits.INT0IE = 1; // Enable INT0
     INTCONbits.INT0IF = 0; // Clear INT0 flag
     INTCON2bits.INTEDG0 = 0; // INT0 on falling edge
-    //INTCON3bits.INT1IE = 1; // Enable INT1
-    //INTCON3bits.INT1IF = 0; // Clear INT1 flag
-    //INTCON2bits.INTEDG1 = 1; // INT1 on rising edge
     /* Timmer0 configuration */
     INTCONbits.TMR0IE = 1; // Enable timer0 interrupt
     INTCONbits.TMR0IF = 0; // Clear TMR0 interrupt flag
@@ -57,7 +54,7 @@ void InitApp(void) {
     T0CONbits.PSA = 0; // Prescaler is assigned.
     T0CONbits.T0PS = 0b101; // Prescaler value = 64
     T0CONbits.TMR0ON = 0; // Stops timer by default
-    
+
 
 
 
