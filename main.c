@@ -24,15 +24,15 @@
 /******************************************************************************/
 /* User Global Variable Declaration                                           */
 /******************************************************************************/
-unsigned int t_firing = 255; // Time when 
+unsigned int t_firing = 255; // Time to start output
 unsigned int per = 255; // Half-wave period
-// unsigned int per_count = ; // Delay time between each count (us)
 unsigned int count_up = 0;
+unsigned int count_t = 0;
 bool inc_t;
 bool dec_t;
-unsigned int count_t = 0; 
 
-// bool state = 0; // Increasing or decreasing state
+unsigned int t_delay = 100; // time between counts
+
 extern unsigned int precarga;
 
 /******************************************************************************/
@@ -55,46 +55,48 @@ void main(void) {
 
     while (1) {
         /* Polling routine */
-        __delay_us(100); // Wait before next count
+        __delay_us(t_delay); // Wait before next count
 
         if (PORTBbits.RB1) {
             count_up += 1;
         } else if (count_up != 0) {
-            if(inc_t || dec_t) {
+            if (inc_t || dec_t) {
                 inc_t = false;
                 dec_t = false;
-            } else if(count_up > count_press_delay) {
+            } else if (count_up > count_press_delay) {
                 dec_t = true;
             } else {
                 inc_t = true;
             }
             count_up = 0;
         }
-        if(inc_t) {
-            count_t+=1;
-            
-            if(count_t == max_count) {
-                if(t_firing<per) {
-                    t_firing+=1;
+        if (inc_t) {
+            // Increasing routine
+            count_t += 1;
+
+            if (count_t == max_count) {
+                if (t_firing < per) {
+                    t_firing += 1;
                 } else {
                     inc_t = false;
                 }
                 count_t = 0;
-                
-                
+
+
             }
-        } else if(dec_t) {
-            count_t+=1;
-            if(count_t == max_count) {
-                if(t_firing>0) {
-                    t_firing-=1;
-                } else{
+        } else if (dec_t) {
+            // Decreasing routine
+            count_t += 1;
+            if (count_t == max_count) {
+                if (t_firing > 0) {
+                    t_firing -= 1;
+                } else {
                     dec_t = false;
                 }
                 count_t = 0;
             }
         }
-        precarga = per - t_firing;
+        precarga = per - t_firing; // Update precarga with newest delay
     }
 
 }
